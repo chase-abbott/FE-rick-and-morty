@@ -6,7 +6,7 @@ const useAuth = () => {
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
 
   const changeUsername = ({ target }) => {
     return setUsername(target.value);
@@ -27,8 +27,10 @@ const useAuth = () => {
       body: JSON.stringify({ username, password })
     })
       .then(res => res.json())
-      .then(res => setUser(res))
-      .then(() => history.push('/home'));
+      .then(res => {
+        setUser(res);
+        return history.push('/home', [res]);
+      });
   };
 
 
@@ -54,5 +56,33 @@ const useCharacters = () => {
   return { characters };
 };
 
+const useFavorites = () => {
+  const history = useHistory();
+  const user = history.location.state[0];
+  const [favorites, setFavorites] = useState([]);
+  
 
-export { useAuth, useCharacters };
+  useEffect(() => {
+    return fetch(`https://stormy-lowlands-99070.herokuapp.com/characters/user/${user.userId}`)
+      .then(res => res.json())
+      .then(res => setFavorites(res));
+  }, []);
+
+  const addFavorite = (character) => {
+    return fetch('https://stormy-lowlands-99070.herokuapp.com/characters/user', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ character, user })
+    })
+      .then(res => res.json())
+      .then(res => setFavorites([...res]));
+  };
+
+  return { favorites, addFavorite };
+};
+
+
+export { useAuth, useCharacters, useFavorites };
