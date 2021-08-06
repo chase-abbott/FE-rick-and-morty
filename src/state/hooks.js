@@ -1,7 +1,9 @@
 /* eslint-disable max-len */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const useAuth = () => {
+  const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
@@ -16,17 +18,17 @@ const useAuth = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if(e.target.value == 'login'){
-      return fetch('https://stormy-lowlands-99070.herokuapp.com/api/auth/login', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      })
-        .then(res => setUser(res));
-    }
+    return fetch(`https://stormy-lowlands-99070.herokuapp.com/api/auth/${e.target.value}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    })
+      .then(res => res.json())
+      .then(res => setUser(res))
+      .then(() => history.push('/home'));
   };
 
 
@@ -40,6 +42,17 @@ const useAuth = () => {
   };
 };
 
+const useCharacters = () => {
+  const [characters, setCharacters] = useState([]);
+
+  useEffect(() => {
+    return fetch('https://stormy-lowlands-99070.herokuapp.com/characters/all')
+      .then(res => res.json())
+      .then(res => setCharacters(res));
+  }, []);
+
+  return { characters };
+};
 
 
-export { useAuth };
+export { useAuth, useCharacters };
