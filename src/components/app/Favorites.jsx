@@ -1,14 +1,11 @@
 import React from 'react';
-import CharacterList from './CharacterList';
-import Header from './Header';
 import styled from 'styled-components';
+import Header from './Header';
 
-export default function Home(){
-
+export default function Favorites(){
   return (
     <Page>
       <Header/>
-      <CharacterList/>
     </Page>
   );
 }
