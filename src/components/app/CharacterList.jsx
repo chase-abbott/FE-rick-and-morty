@@ -16,7 +16,6 @@ export default function CharacterList(){
           ? <Button onClick={() => addFavorite(char)} style={{ color: 'red' }}> &#9825;</Button>
           : <Button onClick={() => addFavorite(char)}> &#9825; </Button>
         }
-        
       </Li>
     );
   });

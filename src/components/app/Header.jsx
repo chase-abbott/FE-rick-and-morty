@@ -1,18 +1,31 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+/* eslint-disable max-len */
+import React, { useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function Header(){
+  const { state } = useLocation();
+
+  useEffect(() => {
+    console.log(state);
+  });
+ 
   return (
     <NavBar>
       <NavLink 
-        to="/home"
-        style={{ textDecoration: 'none', fontSize: '2rem', color: 'white' }}
+        to={{
+          pathname: '/home',
+          state: [state[0]]
+        }}
+        style={{ textDecoration: 'none', fontSize: '2rem', color: 'white' }}       
       > Home 
       </NavLink>
       <NavLink
-        to="/favorites"
-        style={{ textDecoration: 'none', fontSize: '2rem', color: 'white' }}
+        to={{
+          pathname: '/favorites',
+          state: [state[0]]
+        }}
+        style={{ textDecoration: 'none', fontSize: '2rem', color: 'white' }}  
       >
         Favorites
       </NavLink>

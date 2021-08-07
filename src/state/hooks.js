@@ -57,8 +57,8 @@ const useCharacters = () => {
 };
 
 const useFavorites = () => {
-  const location = useLocation();
-  const user = location.state[0];
+  const { state } = useLocation();
+  const user = state[0];
   const [favorites, setFavorites] = useState([]);
   
 
