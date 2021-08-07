@@ -2,19 +2,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import Character from './Character';
-import { useAuth, useCharacters, useFavorites } from '../../state/hooks.js';
+import { useCharacters, useFavorites } from '../../state/hooks.js';
 
 export default function CharacterList(){
   const { characters } = useCharacters();
   const { favorites, addFavorite } = useFavorites();
-  const { user } = useAuth();
 
   const lineItems = characters.map(char => {
-    console.log(user);
     return (
       <Li key={char.id}>
         <Character image={char.image} name={char.name}/>
-        <Button onClick={() => addFavorite(char)}> &#9825; </Button>
+        {favorites.find(item => item.characterId === char.id)
+          ? <Button onClick={() => addFavorite(char)} style={{ color: 'red' }}> &#9825;</Button>
+          : <Button onClick={() => addFavorite(char)}> &#9825; </Button>
+        }
+        
       </Li>
     );
   });

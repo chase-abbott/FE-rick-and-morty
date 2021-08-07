@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const useAuth = () => {
   const history = useHistory();
@@ -57,8 +57,8 @@ const useCharacters = () => {
 };
 
 const useFavorites = () => {
-  const history = useHistory();
-  const user = history.location.state[0];
+  const location = useLocation();
+  const user = location.state[0];
   const [favorites, setFavorites] = useState([]);
   
 
@@ -78,7 +78,7 @@ const useFavorites = () => {
       body: JSON.stringify({ character, user })
     })
       .then(res => res.json())
-      .then(res => setFavorites([...res]));
+      .then(res => setFavorites([...favorites, res]));
   };
 
   return { favorites, addFavorite };
