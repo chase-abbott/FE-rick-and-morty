@@ -1,14 +1,11 @@
 /* eslint-disable max-len */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function Header(){
   const { state } = useLocation();
 
-  useEffect(() => {
-    console.log(state);
-  });
  
   return (
     <NavBar>

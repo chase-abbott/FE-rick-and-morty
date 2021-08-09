@@ -60,12 +60,11 @@ const useFavorites = () => {
   const { state } = useLocation();
   const user = state[0];
   const [favorites, setFavorites] = useState([]);
-  
 
   useEffect(() => {
     return fetch(`https://stormy-lowlands-99070.herokuapp.com/characters/user/${user.userId}`)
       .then(res => res.json())
-      .then(res => setFavorites(res));
+      .then(res =>  setFavorites(res));
   }, []);
 
   const addFavorite = (character) => {
@@ -81,7 +80,22 @@ const useFavorites = () => {
       .then(res => setFavorites([...favorites, res]));
   };
 
-  return { favorites, addFavorite };
+  const deleteFavorite = (charId) => {
+    return fetch(`https://stormy-lowlands-99070.herokuapp.com/characters/user/${charId}/${user.userId}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        const newArray = favorites.filter(char => char !== res);
+        return setFavorites(newArray);
+      });
+  };
+
+  return { favorites, addFavorite, deleteFavorite };
 };
 
 
