@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFavorites } from '../../state/hooks';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -10,9 +10,14 @@ export default function DetailedCharacter({ image, name, charId, char }){
   const [inputValue, setInputValue] = useState(name);
 
   const handleInputChange = ({ target }) => {
-    setInputValue(target.value); 
-    char.name = inputValue;
+    setInputValue(target.value);
+    // char.name = inputValue;
+    console.log(char.name);
   };
+
+  useEffect(() => {
+    char.name = inputValue;
+  }, [inputValue]);
 
   return (<>
     <img src={image} alt={name}/>

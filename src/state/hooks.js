@@ -107,7 +107,7 @@ const useFavorites = () => {
       body: JSON.stringify(body)
     })
       .then(res => res.json())
-      .then(res => setFavorites([...favorites, res]));
+      .then(res => setFavorites(favorites => [...favorites, res]));
   };
 
   return { favorites, addFavorite, deleteFavorite, updateFavorite };
