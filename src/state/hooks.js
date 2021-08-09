@@ -90,12 +90,27 @@ const useFavorites = () => {
     })
       .then(res => res.json())
       .then(res => {
-        const newArray = favorites.filter(char => char !== res);
+        const newArray = favorites.filter(char => char.characterId !== res.characterId);
+        console.log(newArray);        
         return setFavorites(newArray);
       });
+     
   };
 
-  return { favorites, addFavorite, deleteFavorite };
+  const updateFavorite = (charId, body) => {
+    return fetch(`https://stormy-lowlands-99070.herokuapp.com/characters/user/${charId}/${user.userId}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then(res => res.json())
+      .then(res => setFavorites([...favorites, res]));
+  };
+
+  return { favorites, addFavorite, deleteFavorite, updateFavorite };
 };
 
 
