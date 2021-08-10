@@ -10,6 +10,7 @@ export default function DetailedCharacterList(){
   useEffect(() => {
     console.log(favorites);
   }, [favorites]);
+
   const listItems = favorites.map(item => {
     return (
       <Li key={item.characterId}>

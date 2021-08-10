@@ -11,8 +11,6 @@ export default function DetailedCharacter({ image, name, charId, char }){
 
   const handleInputChange = ({ target }) => {
     setInputValue(target.value);
-    // char.name = inputValue;
-    console.log(char.name);
   };
 
   useEffect(() => {
